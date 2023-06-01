@@ -1,0 +1,37 @@
+Nama : Isma Nabilah
+NIM : 0110222033
+ROMBEL : TI02
+
+
+# PENJELASAN
+Pada query INNER JOIN, kita menggunakan beberapa tabel untuk menggabungkan data berdasarkan hubungan yang ditentukan antara mereka. Dalam contoh query INNER JOIN yang telah diberikan sebelumnya, kita menggabungkan tabel kategori, materi, pengajar, peserta, dan penjadwalan_kelas.
+
+Pengaliasan nama tabel memberikan nama sementara atau singkat untuk tabel sehingga kita dapat merujuk ke tabel tersebut dengan nama yang lebih mudah dibaca dan ditulis dalam query. Dalam contoh tersebut, kita memberikan alias untuk setiap tabel: k untuk kategori, m untuk materi, t untuk pengajar, s untuk peserta, dan pk untuk penjadwalan_kelas.
+
+Melalui INNER JOIN, kita menentukan hubungan antara kolom-kolom dalam tabel yang terlibat. Dalam query tersebut, kondisi ON digunakan untuk memadankan kolom id dari tabel kategori dengan kolom kategori_id dalam tabel materi, dan seterusnya, sesuai dengan hubungan yang diinginkan. Dengan melakukan INNER JOIN, kita memperoleh hasil gabungan dari semua tabel berdasarkan kondisi yang diberikan.
+
+Dengan menggunakan RDBMS dan query INNER JOIN, kita dapat menggabungkan dan memperoleh data yang relevan dari beberapa tabel berdasarkan hubungan yang ada di antara mereka, memungkinkan kita untuk menganalisis, memproses, dan mengambil informasi yang lebih lengkap dan terstruktur dari basis data yang kita kelola.
+
+# SCRIPT SQL
+
+INSERT INTO `kategori` (`id`, `nama`) VALUES ('1', 'Programming'), ('2', 'Data Base'), ('3', 'Networking');
+
+INSERT INTO `materi` (`id`, `kode`, `nama_materi`, `deskripsi`, `durasi_jam`, `biaya`, `kategori_id`) VALUES ('1', 'M001', 'Kursus Java', 'Belajara bahasa pemrogramman Java', HOUR('2'), '100000', '1'), ('2', 'M002', 'Kursus My SQL', 'Belajar Data Base menggunakan SQL', HOUR('2'), '80000', '2'), ('3', 'M003', 'Belajar CISCO', 'Belajar Jaringan menggunakan CISCO', HOUR('2'), '50000', '3');
+
+INSERT INTO `pengajar` (`id`, `nip`, `nama`, `gender`, `hp`, `email`, `alamat`, `foto`, `materi_id`) VALUES (NULL, '011001', 'Pak Sirojul', 'L', '0123456789', 'info1@mail.com', 'Depok, Indonesia', 'image.png', '1'), (NULL, '011002', 'Pak Nasrul', 'L', '0987654321', 'info2@mail.com', 'Jakarta Selatan, Indonesia', 'image.png', '2'), (NULL, '011003', 'Pak Lukman', 'L', '0897654321', 'info3@mail.com', 'Jakarta, Indonesia', 'image.png', '3');
+
+INSERT INTO `peserta` (`id`, `nama`, `gender`, `hp`, `email`, `alamat`, `foto`, `materi_id`) VALUES (NULL, 'Miqdam', 'L', '0234567819', 'm@mail.com', 'Depok, Indonesia', 'image.png', '1'), (NULL, 'Laki', 'L', '0321987654', 'l@mai.com', 'Bekasi, Indonesia', 'image.png', '2'), (NULL, 'Cewe', 'P', '0985674321', 'p@mail.com', 'Bogor, Indonesia', 'image.png', '3');
+
+INSERT INTO `penjadwalan_kelas` (`id`, `kode_kelas`, `kelas`, `hari`, `tgl_mulai`, `tgl_akhir`, `jam_mulai`, `jam_akhir`, `materi_id`, `pengajar_id`, `peserta_id`) VALUES (NULL, 'K001', 'JAVA 001', '2023-06-05', '2023-06-05', '2023-06-10', '09:00:00', '11:00:00', '1', '4', '1'), (NULL, 'K002', 'SQL 002', '2023-06-11', '2023-06-11', '2023-06-17', '08:00:00', '10:00:00', '2', '5', '2'), (NULL, 'K003', 'CSC 003', '2023-06-18', '2023-06-18', '2023-06-24', '13:00:00', '15:00:00', '3', '6', '3');
+
+ MySQL returned an empty result set (i.e. zero rows). (Query took 0.0010 seconds.)
+SELECT * FROM kategori INNER JOIN materi ON kategori.id = materi.kategori_id;
+
+ MySQL returned an empty result set (i.e. zero rows). (Query took 0.0008 seconds.)
+SELECT * FROM kategori INNER JOIN materi ON kategori.id = materi.id INNER JOIN pengajar ON materi.id = pengajar.id INNER JOIN peserta ON pengajar.id = peserta.id INNER JOIN penjadwalan_kelas ON peserta.id = penjadwalan_kelas.id;
+
+ MySQL returned an empty result set (i.e. zero rows). (Query took 0.1131 seconds.)
+SELECT * FROM kategori INNER JOIN materi ON kategori.id = materi.kategori_id INNER JOIN pengajar ON materi.kode = pengajar.id INNER JOIN peserta ON pengajar.nip = peserta.id INNER JOIN penjadwalan_kelas ON peserta.id = penjadwalan_kelas.kode_kelas;
+
+ MySQL returned an empty result set (i.e. zero rows). (Query took 0.0010 seconds.)
+SELECT * FROM kategori AS k INNER JOIN materi AS m ON k.id = m.kategori_id INNER JOIN pengajar AS t ON m.id = t.materi_id INNER JOIN peserta AS s ON t.id = s.materi_id INNER JOIN penjadwalan_kelas AS pk ON s.materi_id = pk.id;
